@@ -1,0 +1,51 @@
+.snackbar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 300px;
+  z-index: 1000;
+  border-radius: 4px;
+  padding: 6px;
+  transition: all 0.5s ease;
+  box-shadow:
+    0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14),
+    0 1px 18px 0 rgba(0, 0, 0, 0.12);
+
+  & {
+    // Example of wrapping declarations
+    // Add any declarations here if needed
+  }
+}
+
+.snackbar.error {
+  background-color: #ff5252;
+  color: white;
+}
+
+.snackbar.success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.snackbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+}
+
+.snackbar-close {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 12px;
+  padding: 0;
+}
+
+.snackbar-close:hover {
+  opacity: 0.8;
+}

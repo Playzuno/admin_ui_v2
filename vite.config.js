@@ -9,8 +9,11 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        quietDeps: true, // Suppress warnings from dependencies
+        quietDeps: true,
       },
     },
+  },
+  esbuild: {
+    // jsxInject: `import React from 'react'`,
   },
 });

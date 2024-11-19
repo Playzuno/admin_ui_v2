@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 // import Logo from '../../assets/images/logo.svg';
 import Logo from '../../../assets/images/logo.svg';
 import { useSnackbar } from '../../../hooks/useSnackbar';

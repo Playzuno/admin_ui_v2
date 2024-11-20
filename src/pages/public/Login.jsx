@@ -172,6 +172,8 @@ export default function Login() {
       );
 
       console.log('App login response:', response.data);
+      localStorage.setItem('token', response.data?.token);
+      localStorage.setItem('userInfo', JSON.stringify(response.data?.details));
       // Handle successful app login here
     } catch (error) {
       console.error('App login error:', error);

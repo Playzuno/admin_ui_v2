@@ -3,6 +3,7 @@ import PrivateRoute from '../components/PrivateRoute';
 import Login from '../pages/public/Login';
 import Dashboard from '../pages/private/Dashboard';
 import Registration from '../pages/public/Auth/Registration';
+import { Roles } from '../pages/private/Roles';
 
 export const publicRoutes = [
   {
@@ -23,6 +24,10 @@ export const privateRoutes = [
   {
     path: '/dashboard',
     element: <Dashboard />,
+  },
+  {
+    path: '/roles',
+    element: <Roles />,
   },
 ];
 

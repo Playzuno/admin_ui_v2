@@ -1,3 +1,55 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.text-purple {
+  color: #6f42c1 !important;
+}
+
+.bg-light {
+  background-color: #f8f9fa !important;
+}
+
+.role-list {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.permission-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Custom switch colors */
+.custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+/* Card shadow */
+.card {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Navbar styles */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.nav-icons .nav-item:hover {
+  background-color: #ffe4d4 !important;
+  transition: background-color 0.3s ease;
+}
+
+.user-info {
+  line-height: 1.2;
+}
+
+.main-container-box {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        min-width: 125px;
+        max-width: 200px;
+
+        min-height: 36px;
+        max-height: 48px;
+        text-align: center;
+        margin: auto;
+        border-top: 0px;
+        border-radius: 0px 0px 8px 8px;
+}

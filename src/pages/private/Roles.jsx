@@ -4,18 +4,21 @@ import { RolesList } from '/src/components/roles/RolesList';
 import { PermissionAccess } from '/src/components/roles/PermissionAccess';
 // import 'bootstrap/dist/css/bootstrap.min.css'; // Add this line
 import { useBusinessInfo } from '/src/hooks/useBusinessContext';
+import axios from '/src/utils/axios';
 
 export function Roles() {
   const businessInfo = useBusinessInfo();
   const [selectedRole, setSelectedRole] = useState(1);
   const [roles, setRoles] = useState([]);
+  const [permissions, setPermissions] = useState({});
   useEffect(() => {
     if (!businessInfo.orgId) return;
     axios
-      .get(`/business/${businessInfo.orgId}/roles`)
+      .get(`/api/v1/business/${businessInfo.orgId}/roles`)
       .then(res => {
         // console.log(res.data);
         setRoles(res.data);
+        handleRoleClick(res.data.length > 0 ? res.data[0] : null);
       })
       .catch(err => {
         console.log(err);
@@ -24,7 +27,7 @@ export function Roles() {
   const toggleStatus = role => {
     // console.log(role);
     axios
-      .put(`/business/${businessInfo.orgId}/role/${role.roleKey}`, {
+      .put(`/api/v1/business/${businessInfo.orgId}/role/${role.roleKey}`, {
         roleKey: role.roleKey,
         displayName: role.displayName,
         group: role.group === 'inactive' ? 'active' : 'inactive',
@@ -32,6 +35,9 @@ export function Roles() {
       .then(res => {
         // console.log(res);
         setRoles(roles.map(r => (r.roleKey === role.roleKey ? res.data : r)));
+        if (selectedRole?.roleKey === role.roleKey) {
+          setSelectedRole(res.data);
+        }
       })
       .catch(err => {
         console.log(err);
@@ -44,15 +50,53 @@ export function Roles() {
     // });
     // setRoles(updatedRoles);
   };
+  const handleRoleClick = role => {
+    setSelectedRole(role);
+  };
+
+  const handlePermissionChange = perm => {
+    axios
+      .put(`/api/v1/business/${businessInfo.orgId}/role/${selectedRole.roleKey}/permissions`, perm)
+      .then(res => {
+        // console.log(res);
+        setPermissions(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    if (!businessInfo.orgId) return;
+    axios
+      .get(`/api/v1/business/${businessInfo.orgId}/role/${selectedRole.roleKey}/permissions`)
+      .then(res => {
+        console.log(res.data);
+        setPermissions(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [selectedRole]);
+
   if (!businessInfo.orgId) return null;
+
   return (
     <PageContainer subtitle="Login person role" title="Role/Access">
       <div className="row">
         <div className="col-md-6">
-          <RolesList roles={roles} />
+          <RolesList
+            roles={roles}
+            action={toggleStatus}
+            handleRoleClick={handleRoleClick}
+            selectedRole={selectedRole}
+          />
         </div>
-        <div className="col-md-6">
-          <PermissionAccess />
+        <div
+          className={`col-md-6 ${selectedRole?.group === 'inactive' ? 'text-muted' : ''}`}
+          style={{ pointerEvents: selectedRole?.group === 'inactive' ? 'none' : 'auto' }}
+        >
+          <PermissionAccess permissions={permissions} setPermissions={handlePermissionChange} />
         </div>
       </div>
     </PageContainer>

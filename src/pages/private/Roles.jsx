@@ -66,6 +66,7 @@ export function Roles() {
 
   const handlePermissionChange = (key, active) => {
     // console.log(key, active);
+    setLoading(true);
     const keys = key.split('.');
     const perms = permissions;
     const len = keys.length;
@@ -86,7 +87,8 @@ export function Roles() {
       })
       .catch(err => {
         console.log(err);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const newRole = (roleName, status) => {

@@ -1,8 +1,11 @@
 export function RoleItem({ role, action, handleRoleClick, selectedRole }) {
   return (
     <div
-      className="d-flex justify-content-between align-items-center mb-3 p-2 border rounded hover-cursor-pointer"
+      className="d-flex justify-content-between align-items-center mb-3 p-2 rounded hover-cursor-pointer"
       onClick={() => handleRoleClick(role)}
+      style={{
+        border: selectedRole?.roleKey === role.roleKey ? '1px solid #8a2be2' : '1px solid #dee2e6',
+      }}
     >
       <label className="custom-radio m-0">
         {role.displayName}

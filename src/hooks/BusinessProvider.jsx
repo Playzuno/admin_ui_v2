@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react';
 
 export default function BusinessProvider({ children }) {
   const [businessInfo, setBusinessInfo] = useState({});
+  const orgId = localStorage.getItem('orgId');
   useEffect(() => {
     axios
-      .get('/api/v1/business/293057670284312695')
+      .get(`/api/v1/business/${orgId}`)
       .then(res => {
-        // console.log(res.data);
+        console.log(res.data);
         setBusinessInfo(res.data);
       })
       .catch(err => {

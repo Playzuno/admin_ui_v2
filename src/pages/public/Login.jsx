@@ -49,7 +49,7 @@ export default function Login() {
     } finally {
       setIsLoading(false);
     }
-    window.location.href = '/dashboard';
+    window.location.href = '/roles';
   };
 
   const authorize = async () => {
@@ -220,6 +220,7 @@ export default function Login() {
       });
       console.log(response, 'ljlsf');
       setBusiness(response?.data);
+      localStorage.setItem('orgId', response?.data?.orgId);
       return response?.data;
     } catch (error) {
       console.error('Business validation error:', error);

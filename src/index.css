@@ -57,3 +57,243 @@
 .hover-cursor-pointer:hover {
   cursor: pointer;
 }
+
+/* permission access */
+.text-purple {
+  color: #6f42c1;
+}
+
+.permission-card {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Custom checkbox styles */
+/* Indentation for sub-level checkboxes */
+.indent-level-2 {
+  margin-left: 0.5rem;
+}
+.indent-level-3 {
+  margin-left: 1.75rem;
+}
+
+
+/* Section styles */
+.permission-section {
+  margin-bottom: 2rem;
+}
+
+.permission-section h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #212529;
+  margin-bottom: 1rem;
+}
+
+/* Grid layout */
+.permission-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .permission-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Main checkbox label styles */
+.main-checkbox {
+  color: #6f42c1;
+  font-weight: 500;
+}
+
+/* Container padding */
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.text-lg {
+  font-size: 1.5rem;
+}
+
+.zuno-h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #9202DE;
+  /* margin-bottom: 1rem; */
+}
+.zuno-h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #400C7A;
+  /* margin-bottom: 1rem; */
+}
+
+/* .custom-radio-input {
+  color: #9202DE;
+  appearance: none;
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 5px 0 0;
+  border: 2px solid #999;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.custom-radio-input:hover {
+  border-color: #007bff;
+}
+
+/* Custom color for checked radio */
+/* .custom-radio-input:checked {
+  background-color: #9202DE;
+  border-color: #9202DE;
+  padding: 2px;
+} */
+.custom-radio {
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    display: block;
+}
+
+.custom-radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    height: 14px;
+    width: 14px;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 1px solid #8a2be2;  /* Bright purple border */
+}
+
+/* When checked */
+.custom-radio input:checked ~ .checkmark {
+    border-color: #8a2be2;
+}
+
+/* The dot inside */
+.custom-radio input:checked ~ .checkmark:after {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #8a2be2;  /* Bright purple dot */
+}
+
+/* Hover state */
+.custom-radio:hover input ~ .checkmark {
+    background-color: rgba(138, 43, 226, 0.1);  /* Light purple background on hover */
+}
+
+/* Container to position and size the animation */
+.loading-container {
+  /* width: 200px;
+  height: 200px; */
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+}
+
+/* Pulse element */
+.pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  background-color: black;
+  border-radius: 50%;
+  animation: pulse-animation 2s infinite;
+}
+
+/* Keyframes for pulse movement and fade effect */
+@keyframes pulse-animation {
+  0% {
+    top: 0;
+    left: 0;
+    opacity: 1;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    top: 100%;
+    left: 100%;
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+/* Pulse bar element */
+.pulse-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px; /* Width of the bar */
+  height: 100px; /* Height of the bar */
+  background-color: black;
+  animation: pulse-bar-animation 2s infinite;
+}
+
+/* Keyframes for the bar animation */
+@keyframes pulse-bar-animation {
+  0% {
+    top: 0;
+    left: 0;
+    opacity: 1;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    top: 100%;
+    left: 100%;
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+/* Full-screen or container background */
+.loading-dim-container {
+  width: 600px;
+  height: 300px;
+  background-color: rgb(157, 57, 57); /* Initial background color */
+  animation: dim-glow 2s infinite;
+}
+
+/* Keyframes for dimming and glowing */
+@keyframes dim-glow {
+  0%, 100% {
+    background-color: white; /* Full dim */
+  }
+  50% {
+    background-color: rgb(228, 225, 225); /* Glow */
+  }
+}

@@ -1,0 +1,139 @@
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.dialog-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dialog-title {
+  color: #6f42c1;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.form-label {
+  font-size: 1rem;
+  color: #212529;
+  width: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.colon {
+  margin-left: 4px;
+}
+
+.form-control {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-control:focus {
+  border-color: #6f42c1;
+  box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+  outline: none;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 50px;
+  height: 24px;
+}
+
+.toggle-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-label {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e9ecef;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.toggle-label:before {
+  position: absolute;
+  content: '';
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggle-input:checked + .toggle-label {
+  background-color: #6f42c1;
+}
+
+.toggle-input:checked + .toggle-label:before {
+  transform: translateX(26px);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background-color: #6f42c1;
+  border: none;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #5a37a0;
+}
+
+.btn-secondary {
+  background-color: #e9ecef;
+  border: none;
+  color: #495057;
+}
+
+.btn-secondary:hover {
+  background-color: #dee2e6;
+}

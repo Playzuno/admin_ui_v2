@@ -297,3 +297,16 @@
     background-color: rgb(228, 225, 225); /* Glow */
   }
 }
+
+.primary-gradient-background {
+  background: linear-gradient(
+    to top left, 
+    rgba(40, 11, 77, 0.2) 0%,  
+    rgba(146, 2, 222, 0.4) 10%, 
+    rgba(196, 119, 237, 0.2) 51%, 
+    rgba(255, 255, 255, 0) 100%
+  );
+  /* add opacity of 20% instead of 40% for purple to get original*/
+  /* width: 100%;
+  height: 100vh; */
+}

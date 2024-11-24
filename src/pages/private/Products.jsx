@@ -54,14 +54,18 @@ function Products() {
     const rows = [];
     for (let i = 0; i < products.length; i++) {
       let idx = i % 5;
-      rows.push({
+      const row = {
         id: i,
         category1: columns[0].items.pop(),
         category2: columns[1].items.pop(),
         category3: columns[2].items.pop(),
         category4: columns[3].items.pop(),
         category5: columns[4].items.pop(),
-      });
+      };
+      if (!row.category1 && !row.category2 && !row.category3 && !row.category4 && !row.category5) {
+        break;
+      }
+      rows.push(row);
     }
     console.log(rows);
     setData(rows);

@@ -15,6 +15,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
   data: data,
   setData: setData,
 }) => {
+  // console.log('data', data.length, data);
   const [columns, setColumns] = useState(initialColumns);
   // const [data, setData] = useState(initialData);
   const [dragStart, setDragStart] = useState<{ column: number; row: number } | null>(null);
@@ -32,23 +33,30 @@ const CustomTable: React.FC<CustomTableProps> = ({
 
   const handleCellDrop = (fromColumn: number, fromRow: number, toColumn: number, toRow: number) => {
     if (fromColumn === toColumn && fromRow === toRow) return;
-
-    const newData = data.map((row, rowIndex) => {
-      if (rowIndex === fromRow || rowIndex === toRow) {
-        const newRow = { ...row };
-        if (rowIndex === fromRow) {
-          const fromAccessor = columns[fromColumn].accessor;
-          const toAccessor = columns[toColumn].accessor;
-          const temp = newRow[fromAccessor];
-          newRow[fromAccessor] = data[toRow][toAccessor];
-          newRow[toAccessor] = temp;
-        }
-        return newRow;
-      }
-      return row;
-    });
-
+    const newData = [...data];
+    console.log(fromColumn, fromRow, toColumn, toRow);
+    const fromAccessor = columns[fromColumn].accessor;
+    const toAccessor = columns[toColumn].accessor;
+    const tempCell = newData[toRow][toAccessor];
+    newData[toRow][toAccessor] = newData[fromRow][fromAccessor];
+    newData[fromRow][fromAccessor] = tempCell;
     setData(newData);
+    // const newData = data.map((row, rowIndex) => {
+    //   if (rowIndex === fromRow || rowIndex === toRow) {
+    //     const newRow = { ...row };
+    //     if (rowIndex === fromRow) {
+    //       const fromAccessor = columns[fromColumn].accessor;
+    //       const toAccessor = columns[toColumn].accessor;
+    //       const temp = newRow[fromAccessor];
+    //       newRow[fromAccessor] = data[toRow][toAccessor];
+    //       newRow[toAccessor] = temp;
+    //     }
+    //     return newRow;
+    //   }
+    //   return row;
+    // });
+
+    // setData(newData);
     setDragStart(null);
   };
 

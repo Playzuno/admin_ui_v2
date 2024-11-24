@@ -4,6 +4,7 @@ import Login from '../pages/public/Login';
 import Dashboard from '../pages/private/Dashboard';
 import Registration from '../pages/public/Auth/Registration';
 import { Roles } from '../pages/private/Roles';
+import Products from '../pages/private/Products';
 
 export const publicRoutes = [
   {
@@ -28,6 +29,10 @@ export const privateRoutes = [
   {
     path: '/roles',
     element: <Roles />,
+  },
+  {
+    path: '/products',
+    element: <Products />,
   },
 ];
 

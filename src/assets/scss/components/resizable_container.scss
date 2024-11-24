@@ -1,0 +1,42 @@
+.resizable-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  position: relative;
+}
+
+.resizable-container {
+  position: relative;
+  transition: width 0.1s ease;
+}
+
+.resize-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: ew-resize;
+  color: #8833ff;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+  align-self: center;
+}
+
+.resize-handle:hover {
+  background: #f0f0f0;
+  transform: scale(1.1);
+}
+
+.resize-handle.dragging {
+  background: #8833ff;
+  color: white;
+  transform: scale(1.1);
+}
+
+.resize-icon {
+  pointer-events: none;
+}

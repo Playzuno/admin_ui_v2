@@ -5,7 +5,8 @@ import { useState, useEffect } from 'react';
 import axios from '/src/utils/axios';
 import { PageContainer } from '/src/components/PageContainer.jsx';
 import Loader from '/src/components/Loader';
-
+import ResizableContainer from '/src/components/ResizableContainer.jsx';
+import FileUpload from '../../components/FileUpload';
 function Products() {
   const businessInfo = useBusinessInfo();
   const [products, setProducts] = useState([]);
@@ -82,12 +83,40 @@ function Products() {
   //   category5: 'Category 5',
   // };
 
+  const handleFileUpload = file => {
+    console.log(file);
+
+    const formData = new FormData();
+    formData.append('input_file', file);
+    setLoading(true);
+    axios
+      .post(`/api/v1/business/${businessInfo.orgId}/ai/pdf/tesseract/menu`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(response => {
+        console.log('File uploaded successfully:', response.data);
+      })
+      .catch(error => {
+        console.error('Error uploading file:', error);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const handleManualEntry = () => {
+    console.log('manual entry');
+  };
+
   return (
     <PageContainer subtitle="Products" title="Products">
       {loading && <Loader></Loader>}
       <div className="min-h-screen bg-gray-50 p-8">
-        <div className="max-w-7xl mx-auto">
-          <CustomTable columns={columns} data={data} setData={setData} />
+        <div className="max-w-7xl mx-auto d-flex" style={{ overflowX: 'scroll' }}>
+          <ResizableContainer>
+            <CustomTable columns={columns} data={data} setData={setData} />
+          </ResizableContainer>
+          <FileUpload onFileUpload={handleFileUpload} onManualEntry={handleManualEntry} />
         </div>
       </div>
     </PageContainer>

@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 // import { ArrowLeftRight } from 'lucide-react';
 import '/src/assets/scss/components/resizable_container.scss';
-const ResizableContainer = ({ children, minWidth = 400, maxWidth = 1200 }) => {
-  const [width, setWidth] = useState(900);
+const ResizableContainer = ({ children, minWidth = 400, maxWidth = 1200, fullWidth }) => {
+  const [width, setWidth] = useState(fullWidth || 900);
+  useEffect(() => {
+    if (fullWidth) setWidth(fullWidth);
+  }, [fullWidth]);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef(null);
   const startXRef = useRef(0);

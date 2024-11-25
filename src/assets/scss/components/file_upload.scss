@@ -1,15 +1,83 @@
+.upload-wrapper {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.vertical-bar {
+  background: white;
+  width: 60px;
+  height: 400px;
+  border-radius: 16px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #8833ff;
+  font-weight: 600;
+  font-size: 1.125rem;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.vertical-bar:hover .resize-handle {
+  opacity: 1;
+}
+
 .upload-container {
+  // position: absolute;
+  top: 0;
+  left: 0;
   background: white;
   border-radius: 16px;
   padding: 2rem;
-  width: 400px;
+  // width: 400px;
+  min-width: 200px;
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   align-items: center;
+  pointer-events: auto;
+  // transform: translateX(-20px);
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
 }
+
+// .upload-wrapper.expanded .vertical-bar {
+//   opacity: 0;
+//   pointer-events: none;
+// }
+
+// .upload-wrapper.expanded .upload-container {
+//   opacity: 1;
+//   pointer-events: auto;
+//   transform: translateX(0);
+// }
+
+// @media (max-width: 768px) {
+//   .upload-wrapper.expanded .upload-container {
+//     opacity: 0;
+//     pointer-events: none;
+//   }
+
+//   .upload-wrapper.expanded .vertical-bar {
+//     opacity: 1;
+//     pointer-events: auto;
+//   }
+// }
 
 .upload-title {
   color: #8833ff;
@@ -38,10 +106,28 @@
   background: #f3e8ff;
 }
 
+.dropzone.loading {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
 .upload-icon {
   color: #8833ff;
   margin-bottom: 1rem;
   opacity: 0.8;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .upload-text {
@@ -83,11 +169,16 @@
   transition: all 0.2s ease;
 }
 
-.manual-entry-btn:hover {
+.manual-entry-btn:hover:not(:disabled) {
   background: #7029d4;
   transform: translateY(-1px);
 }
 
-.manual-entry-btn:active {
+.manual-entry-btn:active:not(:disabled) {
   transform: translateY(0);
+}
+
+.manual-entry-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

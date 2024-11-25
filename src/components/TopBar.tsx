@@ -1,16 +1,21 @@
 // import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Topbar() {
   const navItems = [
-    { id: 1, icon: '📋', label: 'Dashboard' },
-    { id: 2, icon: '👥', label: 'Users' },
-    { id: 3, icon: '⚙️', label: 'Settings' },
-    { id: 4, icon: '🛍️', label: 'Products' },
-    { id: 5, icon: '📊', label: 'Reports' },
-    { id: 6, icon: '🔔', label: 'Notifications' },
-    { id: 7, icon: '🌐', label: 'Language' },
+    { id: 1, icon: '📋', label: 'Dashboard', path: '/' },
+    { id: 2, icon: '👥', label: 'Roles', path: '/roles' },
+    { id: 3, icon: '🛍️', label: 'Products', path: '/products' },
+    { id: 4, icon: '⚙️', label: 'Settings', path: '/settings' },
+    { id: 5, icon: '📊', label: 'Reports', path: '/reports' },
+    { id: 6, icon: '🔔', label: 'Notifications', path: '/notifications' },
+    { id: 7, icon: '🌐', label: 'Language', path: '/language' },
   ];
+  const navigate = useNavigate(); // Add this line
+
+  const handleNavItemClick = item => {
+    navigate(item.path);
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 px-4 border-bottom">
@@ -31,6 +36,7 @@ export function Topbar() {
                 backgroundColor: '#FFF5F0',
                 cursor: 'pointer',
               }}
+              onClick={() => handleNavItemClick(item)}
             >
               <span style={{ fontSize: '1.2rem' }}>{item.icon}</span>
             </div>

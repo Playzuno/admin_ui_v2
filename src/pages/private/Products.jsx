@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import CustomTable from '../../components/Table/CustomTable';
 import { useBusinessInfo } from '/src/hooks/useBusinessContext';
 import { useState, useEffect } from 'react';
@@ -7,27 +7,33 @@ import { PageContainer } from '/src/components/PageContainer.jsx';
 import Loader from '/src/components/Loader';
 import ResizableContainer from '/src/components/ResizableContainer.jsx';
 import FileUpload from '../../components/FileUpload';
+import ProductUploadForm from '../../components/ProductUploadForm';
 function Products() {
   const businessInfo = useBusinessInfo();
   const [products, setProducts] = useState([]);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [fileUploadLoading, setFileUploadLoading] = useState(false);
+  const [fileUploadWidth, setFileUploadWidth] = useState(0);
 
   useEffect(() => {
     if (!businessInfo.orgId) return;
+    getProducts();
+  }, [businessInfo]);
+
+  const getProducts = async () => {
     setLoading(true);
     axios
       .get(`/api/v1/business/${businessInfo.orgId}/products`)
       .then(res => {
         // console.log(res.data);
-        setProducts(res.data);
+        setProducts(res.data || []);
       })
       .catch(err => {
         console.log(err);
       })
       .finally(() => setLoading(false));
-  }, [businessInfo]);
-
+  };
   const columns = [
     { header: 'Category 1', accessor: 'category1', id: 1, items: [] },
     { header: 'Category 2', accessor: 'category2', id: 2, items: [] },
@@ -75,6 +81,51 @@ function Products() {
     setData(rows);
   }, [products]);
 
+  let ququeEventSource;
+  const queueSource = () => {
+    if (!businessInfo.orgId) return;
+    if (ququeEventSource) return;
+    ququeEventSource = new EventSource(
+      `${import.meta.env.VITE_API_URL}/api/v1/business/${businessInfo.orgId}/parser/queue`,
+      { withCredentials: true }
+    );
+    ququeEventSource.onmessage = function (event) {
+      console.log('even:', event.data);
+      const data = JSON.parse(event.data);
+      if (data.Status == '100') {
+        setFileUploadLoading(true);
+      }
+      if (data.Status == '200') {
+        setFileUploadLoading(false);
+        getProducts();
+      }
+    };
+    ququeEventSource.onerror = function (event) {
+      console.log('error3:', event.data);
+      setFileUploadLoading(false);
+      ququeEventSource && ququeEventSource.close();
+      ququeEventSource = null;
+    };
+  };
+  useEffect(() => {
+    if (ququeEventSource) {
+      ququeEventSource.close();
+      ququeEventSource = null;
+    }
+    queueSource();
+    //   axios
+    //     .get(`/api/v1/business/${businessInfo.orgId}/parser/queue`)
+    //     .then(res => {
+    //       console.log(res.data);
+    //       setFileUploadLoading(res.data?.status == '100');
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     })
+    //     .finally(() => setLoading(false));
+    // }, [businessInfo]);
+  }, [businessInfo]);
+
   // const categories = {
   //   category1: 'Category 1',
   //   category2: 'Category 2',
@@ -88,7 +139,8 @@ function Products() {
 
     const formData = new FormData();
     formData.append('input_file', file);
-    setLoading(true);
+    setFileUploadLoading(true);
+
     axios
       .post(`/api/v1/business/${businessInfo.orgId}/ai/pdf/tesseract/menu`, formData, {
         headers: {
@@ -97,26 +149,87 @@ function Products() {
       })
       .then(response => {
         console.log('File uploaded successfully:', response.data);
+        // getProducts();
+        // setFileUploadLoading(false);
+        queueSource();
       })
       .catch(error => {
         console.error('Error uploading file:', error);
-      })
-      .finally(() => setLoading(false));
+        setFileUploadLoading(false);
+      });
   };
 
   const handleManualEntry = () => {
     console.log('manual entry');
+    setShowProductUploadForm(true);
+  };
+  const [tableWidth, setTableWidth] = useState(0);
+  const tableRef = useRef(null);
+  useEffect(() => {
+    if (!tableRef.current) return;
+    const pixelWidth = tableRef.current.getBoundingClientRect().width;
+    // console.log(`Width in pixels: ${pixelWidth}`);
+    setTableWidth(pixelWidth - 100);
+  }, [tableRef]);
+
+  const [showProductUploadForm, setShowProductUploadForm] = useState(false);
+
+  const handleProductUploadFormSubmit = (category, menu) => {
+    setLoading(true);
+    axios
+      .post(`/api/v1/business/${businessInfo.orgId}/products`, {
+        categoryId: Number(category),
+        name: menu,
+        orgId: businessInfo.orgId,
+      })
+      .then(res => {
+        // console.log(res);
+        setProducts([...products, res.data]);
+        handleProductUploadFormCancel();
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+    // setShowProductUploadForm(false);
+  };
+
+  const handleProductUploadFormCancel = () => {
+    setShowProductUploadForm(false);
+    // setTableWidth(v => v - 0.01);
+    tableRef.current.style.width = `${tableWidth + 100}px`;
   };
 
   return (
     <PageContainer subtitle="Products" title="Products">
       {loading && <Loader></Loader>}
       <div className="min-h-screen bg-gray-50 p-8">
-        <div className="max-w-7xl mx-auto d-flex" style={{ overflowX: 'scroll' }}>
-          <ResizableContainer>
-            <CustomTable columns={columns} data={data} setData={setData} />
-          </ResizableContainer>
-          <FileUpload onFileUpload={handleFileUpload} onManualEntry={handleManualEntry} />
+        <div className="max-w-7xl mx-auto d-flex" style={{ overflowX: 'scroll', maxWidth: '100%' }}>
+          <div
+            ref={tableRef}
+            style={{ width: `calc(100% - ${fileUploadWidth}px)` }}
+            className="mr-3"
+          >
+            <ResizableContainer fullWidth={tableWidth}>
+              <CustomTable columns={columns} data={data} setData={setData} />
+            </ResizableContainer>
+          </div>
+          {showProductUploadForm ? (
+            <ProductUploadForm
+              onCancel={handleProductUploadFormCancel}
+              onSubmit={handleProductUploadFormSubmit}
+            />
+          ) : (
+            <FileUpload
+              onExpandEvent={() => {
+                setFileUploadWidth(420);
+                tableRef.current.style.width = `calc(100% - ${fileUploadWidth}px)`;
+              }}
+              onFileUpload={handleFileUpload}
+              onManualEntry={handleManualEntry}
+              isLoading={fileUploadLoading}
+            />
+          )}
         </div>
       </div>
     </PageContainer>

@@ -5,7 +5,7 @@ export function PageContainer({ children, title, subtitle, actionIcon }) {
     <div>
       <Topbar></Topbar>
       <div className="bg-light min-vh-100 primary-gradient-background">
-        <div className="container-fluid py-4">
+        <div className="container-fluid py-4" style={{ minHeight: '80vh' }}>
           <div className="card">
             <h2 className="main-container-box h4 py-1 text-purple">{title}</h2>
             <div style={{ margingTop: '-4px' }} className="card-header bg-white border-bottom">

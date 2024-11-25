@@ -101,7 +101,7 @@ function Products() {
       }
     };
     ququeEventSource.onerror = function (event) {
-      console.log('error3:', event.data);
+      console.log('error3:', event);
       setFileUploadLoading(false);
       ququeEventSource && ququeEventSource.close();
       ququeEventSource = null;

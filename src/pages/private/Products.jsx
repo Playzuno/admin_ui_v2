@@ -92,10 +92,10 @@ function Products() {
     ququeEventSource.onmessage = function (event) {
       console.log('even:', event.data);
       const data = JSON.parse(event.data);
-      if (data.Status == '100') {
+      if (data.status == '100') {
         setFileUploadLoading(true);
       }
-      if (data.Status == '200') {
+      if (data.status == '200') {
         setFileUploadLoading(false);
         getProducts();
       }
